@@ -25,7 +25,8 @@ public interface Shape {
      */
     default void draw(Writer writer, Line[] lines) {
         try {
-            for (Line line : lines) {
+            for (Line line : toLines()) {
+                // change the lines to toLines()
                 // TODO: what is the purpose of the code there?
                 if (writer instanceof JPEGWriter) {
                     writer.write(line.toJPEG());

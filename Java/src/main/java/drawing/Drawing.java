@@ -34,6 +34,7 @@ public class Drawing {
             try (Writer writer = new JPEGWriter(filename + ".jpeg")) {
                 for (Shape shape : this.shapes) {
                     // TODO: What is the issue of the behavior here?
+                    // this is the inner logic for shape, we should move it to the shape
                     Line[] lines = shape.toLines();
                     shape.draw(writer, lines);
                 }
@@ -48,6 +49,18 @@ public class Drawing {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+        }
+    }
+
+
+    public class WriterFactory {
+        public static Writer getWriter(String format, String filename) throws IOException {
+            switch (format.toLowerCase()) {
+                case "jpeg": return new JPEGWriter(filename + ".jpeg");
+                case "png": return new PNGWriter(filename + ".png");
+                // additional formats can be added here
+                default: throw new IllegalArgumentException("Unsupported format: " + format);
             }
         }
     }
